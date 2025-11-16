@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Трекер Тренировок</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <h1>Мой дневник тренировок</h1>
+                <div class="user-profile">
+                    <button id="user-profile-btn" class="user-profile-btn">
+                        <span class="user-icon">👤</span>
+                        <span id="current-user-name">Выберите пользователя</span>
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                </div>
+            </div>
+            <nav>
+                <button class="nav-btn active" data-tab="calendar">Календарь</button>
+                <button class="nav-btn" data-tab="programs">Программы</button>
+                <button class="nav-btn" data-tab="workout">Записать тренировку</button>
+            </nav>
+        </header>
+
+        <!-- Календарь -->
+        <section id="calendar-tab" class="tab-content active">
+            <div class="calendar-wrapper">
+                <div class="calendar-header">
+                    <button id="prev-month" class="month-nav">←</button>
+                    <h2 id="current-month-year"></h2>
+                    <button id="next-month" class="month-nav">→</button>
+                </div>
+                <div id="calendar-grid" class="calendar-grid"></div>
+                <div id="calendar-year" class="calendar-year"></div>
+            </div>
+            <div id="day-details" class="day-details"></div>
+        </section>
+
+        <!-- Программы тренировок -->
+        <section id="programs-tab" class="tab-content">
+            <div class="programs-header">
+                <h2>Мои программы тренировок</h2>
+                <button id="new-program-btn" class="btn-primary">+ Создать программу</button>
+            </div>
+            <div id="programs-list" class="programs-list"></div>
+        </section>
+
+        <!-- Запись тренировки -->
+        <section id="workout-tab" class="tab-content">
+            <div class="workout-header">
+                <h2>Записать тренировку</h2>
+                <div class="workout-date-selector">
+                    <label>Дата тренировки:</label>
+                    <input type="date" id="workout-date" required>
+                </div>
+            </div>
+            <div id="workout-form-container">
+                <div class="program-selector">
+                    <label>Выберите программу:</label>
+                    <select id="program-select" required>
+                        <option value="">-- Выберите программу --</option>
+                    </select>
+                </div>
+                <div id="exercises-container"></div>
+                <div class="comment-section">
+                    <label for="workout-comment">Комментарий к тренировке (необязательно):</label>
+                    <textarea id="workout-comment" rows="4" placeholder="Опишите, как прошла тренировка, что заметили, как себя чувствовали..."></textarea>
+                </div>
+                <button id="save-workout-btn" class="btn-primary">Сохранить тренировку</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Модальное окно выбора пользователя -->
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-user-modal">&times;</span>
+            <h2>Выбор пользователя</h2>
+            <div class="user-list-container">
+                <div id="users-list" class="users-list"></div>
+                <button id="add-user-btn" class="btn-primary">+ Добавить нового пользователя</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно добавления пользователя -->
+    <div id="add-user-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-add-user-modal">&times;</span>
+            <h2>Добавить пользователя</h2>
+            <form id="add-user-form">
+                <div class="form-group">
+                    <label>Имя пользователя:</label>
+                    <input type="text" id="new-user-name" required placeholder="Введите имя" maxlength="30">
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn-primary">Добавить</button>
+                    <button type="button" class="btn-secondary" id="cancel-add-user">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно создания программы -->
+    <div id="program-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Создать программу тренировок</h2>
+            <form id="program-form">
+                <div class="form-group">
+                    <label>Название программы:</label>
+                    <input type="text" id="program-name" required placeholder="Например: Тренировка ног">
+                </div>
+                <div id="exercises-form-list"></div>
+                <button type="button" id="add-exercise-btn" class="btn-secondary">+ Добавить упражнение</button>
+                <div class="modal-actions">
+                    <button type="submit" class="btn-primary">Сохранить программу</button>
+                    <button type="button" class="btn-secondary" id="cancel-program">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
